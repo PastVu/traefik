@@ -3,6 +3,9 @@ version: '3.8'
 services:
 
   traefik:
+    logging:
+      options:
+        max-size: "512m"
     image: traefik
     ports:
       - target: 80
