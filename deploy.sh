@@ -11,5 +11,6 @@ export DOMAIN
 export EMAIL
 export USERNAME
 export HASHED_PASSWORD=$(openssl passwd -apr1 $PASSWORD)
+export TOKEN
 
 docker stack deploy -c traefik.yml traefik

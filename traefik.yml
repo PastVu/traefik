@@ -83,6 +83,7 @@ services:
       - --log
       # Enable the Dashboard and API
       - --api
+      - --pilot.token=${TOKEN?ERR}
     networks:
       - traefik-public
 
