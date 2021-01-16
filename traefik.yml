@@ -32,6 +32,10 @@ services:
         # It can be re-used by other stacks in other Docker Compose files
         - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
         - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+        # https-header middleware to add security headers (e.g. HSTS policy)
+        # It can be re-used by other stacks in other Docker Compose files
+        # HSTS max-age=63072000
+        - traefik.http.middlewares.https-header.headers.stsSeconds=63072000
         # traefik-http set up only to use the middleware to redirect to https
         # Uses the environment variable DOMAIN
         - traefik.http.routers.traefik-public-http.rule=Host(`${DOMAIN?Variable not set}`)
@@ -47,7 +51,7 @@ services:
         # Use the special Traefik service api@internal with the web UI/Dashboard
         - traefik.http.routers.traefik-public-https.service=api@internal
         # Enable HTTP Basic auth, using the middleware created above
-        - traefik.http.routers.traefik-public-https.middlewares=admin-auth
+        - traefik.http.routers.traefik-public-https.middlewares=admin-auth,https-header
         # Define the port inside of the Docker service to use
         - traefik.http.services.traefik-public.loadbalancer.server.port=8080
     volumes:
